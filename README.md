@@ -3,11 +3,15 @@
 Includes
 
 - Javascript styleguide
+- git styleguide
+- Agile guidelines
 
 ## Common project guidelines
 
 - Prefer simplicity over complexity
 - Do one thing and do it well
+- Be clear
+- Have momentum
 
 ## Questions 
 
