@@ -1,12 +1,15 @@
 # Javascript styleguide
 
-## General
+## Indentation
+- Use two spaces for indentation.
 
+## General
 - Use `camelCase` for variable, function and property names
 - Use `PascalCase` for constructor names
-- Use leading underscore for private properties
+- Avoid private properties - but when necessary, pepend their names with an underscore
 - Use `""` for strings
 - Use declarative names for variables and functions (no single-letter function parameters!)
+- Use semicolon; 
 
 Be expressive and use nifty Javascript shortcuts to set default values for variables and functions:
 
@@ -56,7 +59,7 @@ Don't pollute the global scope! Use self invoked functions do define a private s
 	console.log(globalVar)
 	// => "Foo"
 
-Use the `function name() {}` construct for classes, and the `var name = function() {}` construct for regular functions:
+Use the `function name() {}` construct for constructors, and the `var name = function() {}` construct for regular functions:
 
 	// Don't:
 	var Person = function() {
@@ -79,8 +82,8 @@ Use the `function name() {}` construct for classes, and the `var name = function
 *Avoid* getting into callback pyramides by using your superhuman refactoring skills to create clean, readable asynchronous code:
 
 	// Don't
-	db.getPerson(2, function(person) {
-		service.uploadAvatar("image.jpg", function(res) {
+    service.uploadAvatar("image.jpg", function(res) {
+        db.getPerson(2, function(person) {
 			person.avatar = res.url
 			db.save(person, function(newPerson) {
 				service.post(newPerson, function(response) {
@@ -138,7 +141,7 @@ Example:
 		secondVar = 2,
 		thirdVar
 
-Try to use a declarative name for `this` when saving a reference (no `that`, `_this`, `self` ...)
+Instead of rebinding `this`, use the new `bind` method for functions to bind the scope of `this`.
 
 Example:
 
@@ -152,18 +155,8 @@ Example:
 		}
 	}
 
-	// Do:
-	var App = {
-		init: function() {
-			var app = this
-			return function() {
-				console.log("Init: ", app)
-			}
-		}
-	}
 
-Even better, use the new `bind` method for functions to bind the scope of `this`:
-
+    //Do:
 	var App = {
 		init: function() {
 			return function() {
