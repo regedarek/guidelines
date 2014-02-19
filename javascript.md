@@ -6,8 +6,8 @@
 ## General
 - Use `camelCase` for variable, function and property names
 - Use `PascalCase` for constructor names
-- Avoid private properties - but when necessary, pepend their names with an underscore
-- Use `""` for strings
+- Use leading underscore for private properties
+- Use `''` for strings
 - Use declarative names for variables and functions (no single-letter function parameters!)
 - Use semicolon; 
 
@@ -28,9 +28,9 @@ Be expressive and use nifty Javascript shortcuts to set default values for varia
 Don't pollute the global scope! Use self invoked functions do define a private scope:
 
 	// Don't:
-	var variableThatWillLeak = "Foo"
+	var variableThatWillLeak = 'Foo'
 	var aGlobalFunction = function() {
-		return "Hi " + variableThatWillLeak
+		return 'Hi ' + variableThatWillLeak
 	}
 
 	function Person(name) {
@@ -41,9 +41,9 @@ Don't pollute the global scope! Use self invoked functions do define a private s
 
 	// Do:
 	(function(rootScope) {
-		var variableThatWontLeak = "Foo"
+		var variableThatWontLeak = 'Foo'
 		var aPrivateFunction = function() {
-			return "Hi " + variableThatWontLeak
+			return 'Hi ' + variableThatWontLeak
 		}
 
 		function Person(name) {
@@ -55,15 +55,15 @@ Don't pollute the global scope! Use self invoked functions do define a private s
 	})(window)
 
 	// Outside:
-	var johan = new Person("Johan")
+	var johan = new Person('Johan')
 	console.log(globalVar)
-	// => "Foo"
+	// => 'Foo'
 
 Use the `function name() {}` construct for constructors, and the `var name = function() {}` construct for regular functions:
 
 	// Don't:
 	var Person = function() {
-		this.name = "Johan"
+		this.name = 'Johan'
 	}
 
 	function square(x) {
@@ -72,7 +72,7 @@ Use the `function name() {}` construct for constructors, and the `var name = fun
 
 	// Do:
 	function Person() {
-		this.name = "Johan"
+		this.name = 'Johan'
 	}
 
 	var square = function(x) {
@@ -82,8 +82,8 @@ Use the `function name() {}` construct for constructors, and the `var name = fun
 *Avoid* getting into callback pyramides by using your superhuman refactoring skills to create clean, readable asynchronous code:
 
 	// Don't
-    service.uploadAvatar("image.jpg", function(res) {
-        db.getPerson(2, function(person) {
+	db.getPerson(2, function(person) {
+		service.uploadAvatar('image.jpg', function(res) {
 			person.avatar = res.url
 			db.save(person, function(newPerson) {
 				service.post(newPerson, function(response) {
@@ -94,7 +94,7 @@ Use the `function name() {}` construct for constructors, and the `var name = fun
 	})
 
 	// Do:
-	service.uploadAvatar("image.jpg", setAvatar)
+	service.uploadAvatar('image.jpg', setAvatar)
 
 	var setAvatar = function(response) {
 		db.getPerson(2, function(person) {
@@ -117,7 +117,7 @@ Even better, use *Promises* instead of callbacks:
 		})
 	}
 
-	service.uploadAvatar("image.jpg")
+	service.uploadAvatar('image.jpg')
 		.then(setAvatar)
 		.then(service.post)
 		.done(console.log)
@@ -150,17 +150,26 @@ Example:
 		init: function() {
 			var that = this
 			return function() {
-				console.log("Init: ", that)
+				console.log('Init: ', that)
 			}
 		}
 	}
 
+	// Do:
+	var App = {
+		init: function() {
+			var app = this
+			return function() {
+				console.log('Init: ', app)
+			}
+		}
+	}
 
     //Do:
 	var App = {
 		init: function() {
 			return function() {
-				console.log("Init: ", this)
+				console.log('Init: ', this)
 			}.bind(this)
 		}
 	}
@@ -168,7 +177,7 @@ Example:
 In promise chains:
 
 	var App = {
-		name: "Awesome App",
+		name: 'Awesome App',
 		doStuff: function() {
 			console.log(this.name)
 		}
@@ -177,7 +186,7 @@ In promise chains:
 	aPromiseCall.then(App.doStuff)
 	// => 'Error'
 	aPromiseCall.then(App.doStuff.bind(App))
-	// => "Awesome App"
+	// => 'Awesome App'
 
 ## Conditionals
 
@@ -219,14 +228,14 @@ Use ternary expressions when possible:
 	// Don't
 	var variable
 	if(something()) {
-		variable = "Foo"
+		variable = 'Foo'
 	}
 	else {
-		variable = "Bar"
+		variable = 'Bar'
 	}
 
 	// Do:
-	var variable = (something()) ? "Foo" : "Bar"
+	var variable = (something()) ? 'Foo' : 'Bar'
 
 ## Object and Array literals
 
@@ -246,15 +255,15 @@ Example:
 
 	// Ye olde, boring way of accessing properties and functions:
 	if(value) {
-		$("#thing").slideDown()
+		$('#thing').slideDown()
 	}
 	else {
-		$("#thing").slideUp()
+		$('#thing').slideUp()
 	}
 
 	// The Sexy Dynamic JS Way
-	var method = (value) ? "Down" : "Up"
-	$("#thing")["slide"+method]()	// evaluates to '$(#thing).slide<Method>()'
+	var method = (value) ? 'Down' : 'Up'
+	$('#thing')['slide'+method]()	// evaluates to '$(#thing).slide<Method>()'
 
 As always, don't abuse this and write unreadable code.
 
@@ -266,20 +275,20 @@ Use the CommonJS module pattern when creating self-contained modules and managin
 
 	// A Person module
 	(function() {
-		var dep = require("dep")
+		var dep = require('dep')
 
 		function Person(name) {
 			this.name = name
 		}
 
 		Person.prototype.greet = function() {
-			return "Hi " + this.name
+			return 'Hi ' + this.name
 		}
-		 
+
 		// Using 'exports' to define the outside interface of the module
 		exports.Person = Person
 	})()
-	
+
 	// A utils module
 	(function() {
 		var utils = {
@@ -293,10 +302,10 @@ Use the CommonJS module pattern when creating self-contained modules and managin
 
 	// Outside
 	(function() {
-		var Person = require("./person").Person,
-			utils = require("./utils")
+		var Person = require('./person').Person,
+			utils = require('./utils')
 
-		(new Person("Johan")).greet()
+		(new Person('Johan')).greet()
 
 		utils.square(2)
 	})()
