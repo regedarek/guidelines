@@ -53,9 +53,9 @@ In Pivotal a story has different statuses:
 
 - **Not started**. Nobody works on this.
 - **Started**. A team member has started working on this story, and thus becomes the story's owner. Really important to mark, so the communication is clear on who's working on what.
-- **Finished**. The story is finished by the owner.
-- **Delivered**. The result of the story is published (ex. pushed to main repo or deployed to staging servers) for the requester to view.
-- **Accepted/Rejected**. After the story is delivered the requester should be able to inspect the results and either accept or reject it. If the story is rejected, it may be restarted by the owner.
+- **Finished**. The story is finished by the owner. The code is in its own branch, which is tested and rebased against the most recent version of the `develop` branch. 
+- **Delivered**. The result of the story is published (ie. feature/fix branch is pushed to main repo and pull request is created) for the requester to view.
+- **Accepted/Rejected**. After the story is delivered the requester should be able to inspect the results and either accept or reject it. If the story is rejected, it may be restarted by the owner. "Accepted" implies that pull request is accepted and the code is now in `develop`.
 
 It's really important to keep the status of a story up to date.
 
