@@ -1,6 +1,7 @@
 # Git styleguide
 
 Read [A successful Git branching model](http://nvie.com/posts/a-successful-git-branching-model/).
+Optionally but recommended: [GitFlow extensions](https://github.com/nvie/gitflow)
 
 [GitHub's Pull Requests](https://help.github.com/articles/using-pull-requests) are good and should be used for larger features and fixes. Opening a Pull Request as soon as you start working on a feature or bug branch is good for code review and having an open discussion about the code.
 
@@ -8,19 +9,19 @@ Read [A successful Git branching model](http://nvie.com/posts/a-successful-git-b
 
 When starting working on a new support branch (ex. a *feature*):
 
-1. Pull down any changes from `origin`: `git pull origin master`
+1. Pull down any changes from `origin`: `git pull origin develop`
 2. Checkout a new feature branch: `git checkout -b feature/<descriptive-but-short-name>`
 3. After one commit, push the feature branch to the GitHub repo: `git push -u origin feature/<name>`
 4. Visit the GitHub repo page and open a new Pull Request for the branch
 5. Do code, commits and tests. Continually push to the GitHub repo and do discussions and code review
-6. When ready, merge the changes into `master`. This should *ideally* be made by another team member
+6. When ready, merge the changes into `develop`. This should *ideally* be made by another team member
 7. Rinse and repeat from 1.
 
 Manual merge in terminal (instead of step 7 above):
 
-1. When in `master`, merge the changes from the feature branch: `git merge --no-ff feature/<name>`
+1. When in `develop`, merge the changes from the feature branch: `git merge --no-ff feature/<name>`
 2. Delete the feature branch: `git branch -d feature/<name>`
-3. Push: `git push origin master`
+3. Push: `git push origin develop`
 
 ## Branch naming conventions
 
